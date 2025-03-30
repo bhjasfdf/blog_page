@@ -108,6 +108,22 @@ body {
     border-radius: 5px;
 }
 
+/* Footer Styling */
+footer {
+    background: #222;  /* Dark background */
+    color: #fff;  /* White text */
+    text-align: center;
+    padding: 15px 0;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .blog-container {
