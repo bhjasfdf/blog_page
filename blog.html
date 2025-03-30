@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <div id="blogContent">
+            <h2>Loading...</h2>
+        </div>
+    </div>
+
+    <script>
+       async function fetchBlog() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let fileName = urlParams.get('file');
+
+            if (!fileName) {
+                document.getElementById("blogContent").innerHTML = "<h2>Blog not found!</h2>";
+                return;
+            }
+
+            let response = await fetch(fileName); // Fixed: No need to prepend "blogs/"
+            if (!response.ok) {
+                document.getElementById("blogContent").innerHTML = "<h2>Blog not found!</h2>";
+                return;
+            }
+
+            let markdown = await response.text();
+
+            let converter = new showdown.Converter();
+            let htmlContent = converter.makeHtml(markdown);
+
+            document.getElementById("blogContent").innerHTML = htmlContent;
+        }
+
+        let script = document.createElement("script");
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js";
+        script.onload = fetchBlog;
+        document.body.appendChild(script);
+    </script>
+</body>
+</html>
